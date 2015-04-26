@@ -1,0 +1,78 @@
+<!doctype HTML>
+<html>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    
+<title>Money</title>
+<link rel = "stylesheet" href = '../css/style.css' />
+<link rel = "stylesheet" href = '../css/css-boilerplate.css' />
+<link rel = "stylesheet" href = '../css/animate.css' />
+<script type = 'text/javascript' src = '../js/add-transaction.js'></script>
+</head>
+
+<body>
+    <div id = 'navbar'>
+        <ul>
+            <li class = 'account-tab'><a href = ''>cash on hand</a></li>
+            <li class = 'account-tab'><a href = ''>add new account</a></li>            
+        </ul>
+    </div>
+    
+    <div id = 'main-body'>
+    <div>
+        <h2>account info</h2>
+        <ul>
+            <li id = 'monthly-total'>total spent this month: $50</li>
+            <li>balance: $500 <a href = ''>add money</a></li>
+        </ul>
+    </div>
+    
+    <div id = 'table-holder'>
+        <h2>Recent Transactions</h2>
+        <table id = 'recent-transactions'>
+            <tr>   
+                <th>date</th>
+                <th>name</th>
+                <th>amount</th>
+                <th>category</th>
+                <th>edit</th>
+            </tr>
+
+        </table>
+        <table id = 'balance'>
+            <tr>
+                <th>total</th>
+                <td>$30</td>
+            </tr>
+            <tr>
+                <th>balance</th>
+                <td>$299.60 </td>
+            </tr>
+        </table>
+    </div>
+
+    
+    
+    <div id = 'form'>
+        <p>Transaction Name</p>
+        <input id = 'trans-name' type = 'text' name = 'Transaction Name'/>
+        <p>Amount</p>
+        <input id = 'amt-spent' type = 'number' name = 'Amount Spent' placeholder = '5.00'/>
+        <p>category</p>
+        <input id = 'category' type = 'text' name = 'Expense Category' placeholder = 'optional'/>
+        <br>
+        <a href = '' onclick = 'hideForm()'>Cancel</a>
+    </div>
+    
+    <div id = 'button-holder' >
+    <button id = 'new-transaction-button' onclick = 'addTransaction()'>New Transaction</button>
+    <button id = 'save-button' onclick = "saveTransaction()">Save</button>
+    </div>
+            
+    </div>
+    
+</body>
+
+
+
+</html>

@@ -1,0 +1,57 @@
+* {
+    box-sizing: border-box; 
+    
+}
+
+html, body {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    height: 100vh;
+}
+
+table {
+    border: 2px solid black;
+}
+
+/*---------------------------------*/
+
+#navbar {
+}
+
+#navbar > ul {
+    padding: 0;
+}
+
+#navbar ul li {
+    list-style-type: none;
+    display: inline;
+    padding: 10px;
+    background-color: aquamarine;
+    border-radius: 10px 10px 0 0;
+}
+
+/*--------------------------------*/
+
+
+#form {
+    display: none;
+}
+
+/*--------------------------------*/
+
+button {
+    padding: 20px;
+    font-family: Arial;
+    font-size: 1.5em;
+}
+
+#button-holder {
+    text-align: center;
+}
+
+#save-button {
+    display: none;
+}
