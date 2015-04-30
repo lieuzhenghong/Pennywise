@@ -10,6 +10,7 @@ html, body {
 
 body {
     height: 100vh;
+    font-family: Arial;
 }
 
 table {
@@ -18,19 +19,23 @@ table {
 
 /*---------------------------------*/
 
-#navbar {
+#account-tabs {
 }
 
-#navbar > ul {
+#account-tabs > ul {
     padding: 0;
 }
 
-#navbar ul li {
+#account-tabs ul li {
     list-style-type: none;
     display: inline;
     padding: 10px;
     background-color: aquamarine;
     border-radius: 10px 10px 0 0;
+}
+
+#account-tabs ul li:hover {
+    background-color: aqua;
 }
 
 /*--------------------------------*/
