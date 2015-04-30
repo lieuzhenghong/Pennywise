@@ -2,6 +2,8 @@ var ACTIVETAB = '';
 var TRANSACTIONS = [];
 var ACCOUNTS = [];
 
+
+
 function hideForm (){
     document.getElementById('form').style.display = 'none';
     document.getElementById('new-transaction-button').style.display = 'block';
@@ -16,6 +18,26 @@ function showForm(){
     document.getElementById('table-holder').style.display = 'none'; 
 }
 
+function addAccount(){
+    var accountName = prompt('Give a name to your own account:');
+    ACCOUNTS.push(accountName);
+    renderTabs();
+}
+
+function renderTabs(){
+    document.getElementById('accounts').innerHTML = "cleared";
+
+    /*
+    console.log(ACCOUNTS);
+    ACCOUNTS.map(function(account){
+        document.getElementById('accounts').innerHTML += "<li class = 'account-tab'><a href =" + "'#account'>" + account + "</a></li>";
+    });
+    
+    document.getElementById('accounts').innerHTML += "<li class = 'account-tab'><a onclick = 'addAccount()'>" + "create new account" + "</a></li>";
+    */
+}
+
+/*
 (function() {
     
     var temp = document.getElementsByClassName('account-tab');
@@ -29,7 +51,7 @@ function showForm(){
     }
     
     
-})();
+})();*/
 
 
 function addTransaction() {
