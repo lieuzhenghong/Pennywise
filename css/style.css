@@ -6,11 +6,17 @@
 html, body {
     padding: 0;
     margin: 0;
+    max-width: 100vh;
 }
 
 body {
     height: 100vh;
     font-family: Arial;
+}
+
+#wrapper {
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 table {
@@ -28,35 +34,21 @@ table {
 
 #account-tabs ul li {
     list-style-type: none;
-    display: inline;
-    padding: 10px;
-    background-color: aquamarine;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    /*background-color: aquamarine; 
     border-radius: 10px 10px 0 0;
+    display: inline; */
 }
 
 #account-tabs ul li:hover {
     background-color: aqua;
 }
 
-/*--------------------------------*/
-
-
-#form {
-    display: none;
-}
-
-/*--------------------------------*/
+/* ----------------------------------- */
 
 button {
     padding: 20px;
     font-family: Arial;
     font-size: 1.5em;
-}
-
-#button-holder {
-    text-align: center;
-}
-
-#save-button {
-    display: none;
 }

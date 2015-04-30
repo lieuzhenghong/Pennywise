@@ -1,7 +1,8 @@
 var ACCOUNTS = [
     {name: 'cash on hand'},
     {name: 'savings account'},
-    {name: 'shared account'}
+    {name: 'shared account'},
+    {name: 'my second wallet'}
 ];
 
 var TRANSACTIONS = [
@@ -10,22 +11,32 @@ var TRANSACTIONS = [
     {date: '', name: 'Cash withdrawal', amount: 250, account: 'savings account'}
 ];
 
-var AccountList = React.createClass({
+var AccountRow = React.createClass({
     render: function () {
         return (
-            <ul>
-            {
-                this.props.accounts.map(function(each_account) {
-                        return <li>{each_account.name}</li>
-                })
-            }
-            </ul>
-            )
-    }
+            <li>{this.props.account}</li>
+        )}
+});
+
+var AccountList = React.createClass({
+    render: function () {
+        
+        var rows = [];
+        this.props.accounts.map(function(each_account) {
+            rows.push(<AccountRow account = {each_account.name} key = {each_account.name}/>);
+                      })
+            
+    return (
+        <ul>
+        {rows}
+        </ul>
+    )
+    }   
 });
 
 
 var NavBar = React.createClass({
+    
     render: function () {
         return (
             <div id = 'account-tabs'>
@@ -54,13 +65,22 @@ var TransactionRow = React.createClass({
 
 var TransactionList = React.createClass ({                      
     render: function () {
+        
+        var activeaccount = this.props.activeAccount;
+        
         var rows = [];
         this.props.transactions.map(function(each_transaction) {
-            if (each_transaction.account == this.props.activeAccount) {
+            if (each_transaction.account == activeaccount) {
+                
+                /* Very strange behaviour
+                if (each_transaction account == this.props.activeAccount) 
+                DOES NOT WORK, I do not know why this is the case
+                */
+                
                 rows.push(<TransactionRow transaction = {each_transaction} key = {each_transaction.name} />);
             }
             else {
-                console.log(each_transaction.account);
+                /*console.log(each_transaction.account);*/
             }     
         })
         return (
@@ -73,9 +93,10 @@ var TransactionList = React.createClass ({
 
 var TransactionsTable = React.createClass({
     render: function() {
+        
         return (
             <div id = 'recent-transactions'>
-            <h2>Recent Transactions</h2>
+            <h2>Recent Transactions for {this.props.activeAccount}</h2>
             <table>
                 <tr>
                     <th>date</th>
@@ -86,7 +107,8 @@ var TransactionsTable = React.createClass({
                 </tr>
                 <TransactionList 
                     transactions = {this.props.transactions}
-                    activeAccount = {this.props.activeAccount}/>
+                    activeAccount = {this.props.activeAccount}
+            />
             </table>
             </div>
         )
@@ -121,25 +143,23 @@ var ButtonMenu = React.createClass ({
 });
 
 var Container = React.createClass({
-    getIntialState: function() {
+    
+    getInitialState: function (){
         return {
-            activeAccount: "cash on hand"
-        }
-    },
-    
-    componentWillMount: function(){
-        this.setState( 
-            {activeaccount: this.state.activeAccount}
-        )
-    },
-    
+            activeAccount: ACCOUNTS[0].name
+        };
+    },          
+
     render: function () {
+        
+        console.log(this.state.activeAccount);
+        
         return (
-            <div>
+            <div id = 'wrapper'>
             <NavBar accounts = {ACCOUNTS} />
             <TransactionsTable 
                 transactions = {TRANSACTIONS}
-                activeAccount = {this.state.activeaccount}
+                activeAccount = {this.state.activeAccount}
             />
             <TransactionForm />
             <ButtonMenu />
