@@ -1,4 +1,4 @@
-var ACCOUNTS = [
+    var ACCOUNTS = [
     {name: 'cash on hand'},
     {name: 'savings account'},
     {name: 'shared account'},
@@ -12,36 +12,49 @@ var TRANSACTIONS = [
 ];
 
 var AccountRow = React.createClass({
+
+    handleClick: function(e) {
+        this.props.onChange(this.props.account);
+    },
+
     render: function () {
         return (
-            <li>{this.props.account}</li>
+            <li onClick = {this.handleClick}> {this.props.account}</li>
         )}
 });
 
 var AccountList = React.createClass({
+
     render: function () {
-        
+
         var rows = [];
         this.props.accounts.map(function(each_account) {
-            rows.push(<AccountRow account = {each_account.name} key = {each_account.name}/>);
-                      })
-            
+            rows.push(
+                <AccountRow 
+                    account = {each_account.name} 
+                    key = {each_account.name}
+                    onChange = {this.props.onChange} 
+                />);
+                      }, this);
     return (
         <ul>
         {rows}
         </ul>
-    )
+    )   
     }   
 });
 
 
 var NavBar = React.createClass({
-    
+
     render: function () {
         return (
             <div id = 'account-tabs'>
                 <h2> Accounts </h2>
-                <AccountList accounts = {this.props.accounts} />
+                <AccountList 
+                    accounts = {this.props.accounts} 
+                    {...this.props} 
+                />
             </div>
         )
     }
@@ -50,7 +63,7 @@ var NavBar = React.createClass({
 var TransactionRow = React.createClass({
     render: function (){
         var trans = this.props.transaction;
-        
+
         return (
             <tr>
             <td>{trans.date}</td>
@@ -65,18 +78,18 @@ var TransactionRow = React.createClass({
 
 var TransactionList = React.createClass ({                      
     render: function () {
-        
+
         var activeaccount = this.props.activeAccount;
-        
+
         var rows = [];
         this.props.transactions.map(function(each_transaction) {
             if (each_transaction.account == activeaccount) {
-                
+
                 /* Very strange behaviour
                 if (each_transaction account == this.props.activeAccount) 
                 DOES NOT WORK, I do not know why this is the case
                 */
-                
+
                 rows.push(<TransactionRow transaction = {each_transaction} key = {each_transaction.name} />);
             }
             else {
@@ -93,7 +106,7 @@ var TransactionList = React.createClass ({
 
 var TransactionsTable = React.createClass({
     render: function() {
-        
+
         return (
             <div id = 'recent-transactions'>
             <h2>Recent Transactions for {this.props.activeAccount}</h2>
@@ -114,7 +127,7 @@ var TransactionsTable = React.createClass({
         )
     }
 });
-        
+
 var TransactionForm = React.createClass({
     render: function() {
         return (
@@ -130,8 +143,8 @@ var TransactionForm = React.createClass({
         )
     }
 });
-        
-        
+
+
 var ButtonMenu = React.createClass ({
     render: function () {
         return (
@@ -143,20 +156,27 @@ var ButtonMenu = React.createClass ({
 });
 
 var Container = React.createClass({
-    
+
     getInitialState: function (){
         return {
             activeAccount: ACCOUNTS[0].name
         };
-    },          
+    },
+
+    setActiveAccount: function(dat) {
+        this.setState({
+            activeAccount: dat  
+        });
+    },
 
     render: function () {
-        
-        console.log(this.state.activeAccount);
-        
         return (
             <div id = 'wrapper'>
-            <NavBar accounts = {ACCOUNTS} />
+            <NavBar 
+                accounts = {ACCOUNTS}
+                activeAccount = {this.state.activeAccount}
+                onChange = {this.setActiveAccount}
+            />
             <TransactionsTable 
                 transactions = {TRANSACTIONS}
                 activeAccount = {this.state.activeAccount}
