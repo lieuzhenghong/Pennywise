@@ -8,9 +8,9 @@ var ACCOUNTS = [
 ];
 
 var TRANSACTIONS = [
-    {date: '', name: 'Bananas', amount: 6, category: 'Groceries', account: 'cash on hand'},
-    {date: '', name: 'Apples', amount: 2.50, category: 'Groceries', account: 'cash on hand'},
-    {date: '', name: 'Cash withdrawal', amount: 250, account: 'savings account'}
+    {date: '2015/05/26', name: 'Bananas', amount: 6, category: 'Groceries', account: 'cash on hand'},
+    {date: '2015/05/23', name: 'Apples', amount: 2.50, category: 'Groceries', account: 'cash on hand'},
+    {date: '2015/05/27', name: 'Cash withdrawal', amount: 250, account: 'savings account'}
 ];
 
 var Container = React.createClass({
@@ -30,7 +30,8 @@ var Container = React.createClass({
 
     render: function () {
         return (
-            <div id = 'wrapper'>
+            <div className = 'container'>
+            <h1>Pennywise</h1>
             <NavBar 
                 accounts = {ACCOUNTS}
                 activeAccount = {this.state.activeAccount}
@@ -53,7 +54,7 @@ var AccountRow = React.createClass({
 
     render: function () {
         return (
-            <li onClick = {this.handleClick}> {this.props.account}</li>
+            <li className = 'button' onClick = {this.handleClick}> {this.props.account}</li>
         )}
 });
 
@@ -83,7 +84,7 @@ var NavBar = React.createClass({
 
     render: function () {
         return (
-            <div id = 'account-tabs'>
+            <div className= 'row'>
                 <h2> Accounts </h2>
                 <AccountList 
                     accounts = {this.props.accounts} 
@@ -105,21 +106,33 @@ var TransactionsTable = React.createClass({
         })
     },
     
+    handleTransactionDelete: function(transaction) {
+        var index = TRANSACTIONS.indexOf(transaction);
+        
+        this.setState({
+            TRANSACTIONS: TRANSACTIONS.splice(index, 1)
+        })
+    },
+    
     render: function() {
         return (
-            <div id = 'recent-transactions'>
+            <div className = 'row'>
             <h2>Recent Transactions for {this.props.activeAccount}</h2>
-            <table>
+            <table className = 'u-full-width'>
+            <thead>
                 <tr>
                     <th>date</th>
                     <th>name</th>
                     <th>amount</th>
                     <th>account</th>
-                    <th>edit </th>
+                    <th>category</th>
+                    <th>delete </th>
                 </tr>
+            </thead>
                 <TransactionList 
                     transactions = {this.props.transactions}
                     activeAccount = {this.props.activeAccount}
+                    onTransactionDelete = {this.handleTransactionDelete}
                 />
 
             </table>
@@ -129,7 +142,11 @@ var TransactionsTable = React.createClass({
     }
 });        
         
-var TransactionList = React.createClass ({                      
+var TransactionList = React.createClass ({
+    passOnDelete: function(transaction) {
+        this.props.onTransactionDelete(transaction);
+    },
+    
     render: function () {
 
         var activeaccount = this.props.activeAccount;
@@ -145,12 +162,15 @@ var TransactionList = React.createClass ({
                 it is due to javascript scoping of the 'this' variable
                 */
 
-                rows.push(<TransactionRow transaction = {each_transaction} key = {each_transaction.name} />);
-            }
-            else {
-                /*console.log(each_transaction.account);*/
-            }     
-        })
+                rows.push(
+                    <TransactionRow 
+                    onTransactionDelete = {this.passOnDelete}
+                    transaction = {each_transaction} 
+                    key = {each_transaction.name}
+                    />
+                );  
+        }
+        }, this);
         return (
             <tbody>
             {rows}
@@ -160,6 +180,11 @@ var TransactionList = React.createClass ({
 });        
 
 var TransactionRow = React.createClass({
+    
+    DeleteTransaction: function( e ) {
+        this.props.onTransactionDelete(this.props.transaction);
+    },
+    
     render: function (){
         var trans = this.props.transaction;
 
@@ -169,7 +194,8 @@ var TransactionRow = React.createClass({
             <td>{trans.name}</td>
             <td>{trans.amount}</td>
             <td>{trans.account}</td>
-            <td><a href = ''>edit</a></td>
+            <td>{trans.category}</td>
+            <td><i onClick = {this.DeleteTransaction} className = 'fa fa-trash-o'></i></td>
             </tr>
         )
     }
@@ -184,8 +210,19 @@ var TransactionForm = React.createClass({
         var name = React.findDOMNode(this.refs.t_name).value.trim();
         var amount = React.findDOMNode(this.refs.t_amount).value.trim();
         var cat = React.findDOMNode(this.refs.t_cat).value.trim();
+       
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
         
-        this.props.onTransactionSubmit({name: name, amount: amount, cat: cat});
+        if (dd < 10) dd = '0' + dd;
+        if (mm < 10) mm = '0' + mm;
+        
+        today = yyyy + '/' + mm + '/' + dd;
+        
+        
+        this.props.onTransactionSubmit({date: today, name: name, amount: amount, category: cat});
         
         React.findDOMNode(this.refs.t_name).value = '';
         React.findDOMNode(this.refs.t_amount).value = '';
@@ -197,13 +234,14 @@ var TransactionForm = React.createClass({
         return (
             <form onSubmit = {this.handleSubmit}>
             <h2>Add Transaction </h2>
-            <p>Transaction name</p>
-            <input type = 'text' placeholder = 'Transaction name' ref = 't_name'/>
-            <p>Amount</p>
-            <input type = 'number' placeholder = 'Amount' ref = 't_amount' />
-            <p>Category (optional) </p>
-            <input type = 'text' placeholder = 'Category (optional)' ref = 't_cat' />
-            <input type = 'submit' value = 'Add Transaction'/>
+            <label htmlFor = 'name'>Transaction name</label>
+            <input type = 'text' id = 'name' placeholder = 'Transaction name' ref = 't_name'/>
+            <label htmlFor = 'amount'>Amount</label>
+            <input type = 'number' id = 'amount' placeholder = 'Amount' ref = 't_amount' />
+            <label htmlFor = 'category'>Category</label>
+            <input type = 'text' id = 'category' placeholder = 'Category (optional)' ref = 't_cat' />
+            <br/>
+            <input className = 'button-primary' type = 'submit' value = 'Add Transaction'/>
             </form>
         )
     }
