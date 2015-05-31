@@ -248,4 +248,4 @@ var TransactionForm = React.createClass({
 });
 
 
-React.render(<Container />, document.body);
+React.render(React.createElement(Container, null), document.getElementById('mount-point'));
