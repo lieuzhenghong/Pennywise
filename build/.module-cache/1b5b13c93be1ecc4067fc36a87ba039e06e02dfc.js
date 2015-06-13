@@ -14,6 +14,8 @@ var TRANSACTIONS = [
     {date: '2015/05/27', name: 'Cash withdrawal', amount: 250, account: 'savings account'}
 ];
 
+var sum = 0;
+
 var Container = React.createClass({displayName: "Container",
 
     getInitialState: function (){
@@ -40,7 +42,8 @@ var Container = React.createClass({displayName: "Container",
             ), 
             React.createElement(TransactionsTable, {
                 transactions: this.state.transactions, 
-                activeAccount: this.state.activeAccount}
+                activeAccount: this.state.activeAccount, 
+                sum: this.props.sum}
             )
             )
         );
@@ -177,6 +180,7 @@ var TransactionsTable = React.createClass({displayName: "TransactionsTable",
                 React.createElement(TransactionList, {
                     transactions: this.props.transactions, 
                     activeAccount: this.props.activeAccount, 
+                    sum: this.props.sum, 
                     onTransactionDelete: this.handleTransactionDelete}
                 )
 
@@ -191,6 +195,12 @@ var TransactionList = React.createClass ({displayName: "TransactionList",
   
     passOnDelete: function(transaction) {
         this.props.onTransactionDelete(transaction);
+    },
+    
+    sumAll: function(){
+      sum = 0;
+      this.props.transactions.map(function(e) {sum += e.amount});
+      return sum;
     },
     
     render: function () {
@@ -218,6 +228,13 @@ var TransactionList = React.createClass ({displayName: "TransactionList",
         }
         }, this);
         
+          rows.push(
+            React.createElement("tr", null, 
+            React.createElement("td", null, "Total"), 
+            React.createElement("td", null, sumAll)
+            )
+            )
+
         return (
             React.createElement("tbody", null, 
             rows

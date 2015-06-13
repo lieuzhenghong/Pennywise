@@ -188,9 +188,12 @@ var TransactionsTable = React.createClass({displayName: "TransactionsTable",
 });        
         
 var TransactionList = React.createClass ({displayName: "TransactionList",
-  
     passOnDelete: function(transaction) {
         this.props.onTransactionDelete(transaction);
+    },
+    
+    sumAll: function(){
+      this.props.transactions.map(function(e) {sum += e.amount})
     },
     
     render: function () {
@@ -206,7 +209,7 @@ var TransactionList = React.createClass ({displayName: "TransactionList",
                 DOES NOT WORK, I do not know why this is the case
                 
                 it is due to javascript scoping of the 'this' variable
-                */  
+                */
 
                 rows.push(
                     React.createElement(TransactionRow, {
@@ -218,6 +221,9 @@ var TransactionList = React.createClass ({displayName: "TransactionList",
         }
         }, this);
         
+          rows.push(
+            )
+
         return (
             React.createElement("tbody", null, 
             rows

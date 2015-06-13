@@ -1,5 +1,4 @@
-(function () {
-  'use strict';
+'use strict';
 
 var ACCOUNTS = [
     {name: 'cash on hand'},
@@ -48,60 +47,18 @@ var Container = React.createClass({displayName: "Container",
 });
 
 var AccountRow = React.createClass({displayName: "AccountRow",
-  
-    passOn: function() {
-      this.props.onDelete(this.props.account);
-    },
 
-    handleClick: function() {
-      this.props.onChange(this.props.account);
+    handleClick: function(e) {
+        this.props.onChange(this.props.account);
     },
 
     render: function () {
         return (
-            React.createElement("li", {className: "button", onClick: this.handleClick}, " ", this.props.account, "   ",  
-              React.createElement("i", {onClick: this.passOn, className: "fa fa-trash-o"})
-            )
+            React.createElement("li", {className: "button", onClick: this.handleClick}, " ", this.props.account)
         )}
 });
 
-var NewAccountButton = React.createClass({displayName: "NewAccountButton",
-  
-  handleClick: function(e) {
-    var name = React.findDOMNode(this.refs.a_name).value.trim();
-    this.props.onAddNewAccount({name: name});
-    React.findDOMNode(this.refs.a_name).value = '';
-  },
-  
-  render: function () {
-    return (
-      React.createElement("div", null, 
-      React.createElement("input", {type: "text", id: "name", placeholder: "Account name", ref: "a_name"}), 
-      React.createElement("button", {className: "button-primary", onClick: this.handleClick}, 
-      "Create New Account"
-      )
-      )
-      )
-  }
-});
-
 var AccountList = React.createClass({displayName: "AccountList",
-  
-  addNewAccount: function(account) {
-    var account = account;
-    
-    this.setState({
-      ACCOUNTS: ACCOUNTS.push(account)
-    })
-  },
-  
-  deleteAccount: function(account) {
-    var index = ACCOUNTS.indexOf(account);
-    
-    this.setState({
-      ACCOUNTS: ACCOUNTS.splice(index,1)
-    })
-  },
 
     render: function () {
 
@@ -111,11 +68,9 @@ var AccountList = React.createClass({displayName: "AccountList",
                 React.createElement(AccountRow, {
                     account: each_account.name, 
                     key: each_account.name, 
-                    onChange: this.props.onChange, 
-                    onDelete: this.deleteAccount}
+                    onChange: this.props.onChange}
                 ));
                       }, this);
-        rows.push(React.createElement(NewAccountButton, {key: 'new_account', onAddNewAccount: this.addNewAccount}));
     return (
         React.createElement("ul", null, 
         rows
@@ -188,7 +143,6 @@ var TransactionsTable = React.createClass({displayName: "TransactionsTable",
 });        
         
 var TransactionList = React.createClass ({displayName: "TransactionList",
-  
     passOnDelete: function(transaction) {
         this.props.onTransactionDelete(transaction);
     },
@@ -206,7 +160,7 @@ var TransactionList = React.createClass ({displayName: "TransactionList",
                 DOES NOT WORK, I do not know why this is the case
                 
                 it is due to javascript scoping of the 'this' variable
-                */  
+                */
 
                 rows.push(
                     React.createElement(TransactionRow, {
@@ -217,7 +171,6 @@ var TransactionList = React.createClass ({displayName: "TransactionList",
                 );  
         }
         }, this);
-        
         return (
             React.createElement("tbody", null, 
             rows
@@ -296,4 +249,3 @@ var TransactionForm = React.createClass({displayName: "TransactionForm",
 
 
 React.render(React.createElement(Container, null), document.getElementById('mount-point'));
-}());

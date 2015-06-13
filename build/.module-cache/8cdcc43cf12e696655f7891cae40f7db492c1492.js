@@ -192,6 +192,7 @@ var TransactionList = React.createClass ({displayName: "TransactionList",
     passOnDelete: function(transaction) {
         this.props.onTransactionDelete(transaction);
     },
+
     
     render: function () {
 
@@ -218,6 +219,13 @@ var TransactionList = React.createClass ({displayName: "TransactionList",
         }
         }, this);
         
+          rows.push(
+            React.createElement("tr", null, 
+            React.createElement("td", null, "Total"), 
+            React.createElement("td", null, this.sum)
+            )
+            )
+
         return (
             React.createElement("tbody", null, 
             rows

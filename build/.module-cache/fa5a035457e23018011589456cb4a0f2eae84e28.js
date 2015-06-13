@@ -218,6 +218,13 @@ var TransactionList = React.createClass ({displayName: "TransactionList",
         }
         }, this);
         
+          rows.push(
+            React.createElement("tr", null, 
+            React.createElement("td", null, "Total"), 
+            React.createElement("td", null, this.sum)
+            )
+            )
+
         return (
             React.createElement("tbody", null, 
             rows

@@ -1,4 +1,5 @@
-'use strict';
+(function () {
+  'use strict';
 
 var ACCOUNTS = [
     {name: 'cash on hand'},
@@ -40,25 +41,67 @@ var Container = React.createClass({
             <TransactionsTable 
                 transactions = {this.state.transactions}
                 activeAccount = {this.state.activeAccount}
-            />
+            />  
             </div>
         );
     }
 });
 
 var AccountRow = React.createClass({
+  
+    passOn: function() {
+      this.props.onDelete(this.props.account);
+    },
 
-    handleClick: function(e) {
-        this.props.onChange(this.props.account);
+    handleClick: function() {
+      this.props.onChange(this.props.account);
     },
 
     render: function () {
         return (
-            <li className = 'button' onClick = {this.handleClick}> {this.props.account}</li>
+            <li className = 'button' onClick = {this.handleClick}> {this.props.account}  &nbsp; 
+              <i onClick = {this.passOn} className = 'fa fa-trash-o'></i>
+            </li>
         )}
 });
 
+var NewAccountButton = React.createClass({
+  
+  handleClick: function(e) {
+    var name = React.findDOMNode(this.refs.a_name).value.trim();
+    this.props.onAddNewAccount({name: name});
+    React.findDOMNode(this.refs.a_name).value = '';
+  },
+  
+  render: function () {
+    return (
+      <div>
+      <input type = 'text' id = 'name' placeholder = 'Account name' ref = 'a_name'/>
+      <button className = 'button-primary' onClick = {this.handleClick}>
+      Create New Account
+      </button>
+      </div>
+      )
+  }
+});
+
 var AccountList = React.createClass({
+  
+  addNewAccount: function(account) {
+    var account = account;
+    
+    this.setState({
+      ACCOUNTS: ACCOUNTS.push(account)
+    })
+  },
+  
+  deleteAccount: function(account) {
+    var index = ACCOUNTS.indexOf(account);
+    
+    this.setState({
+      ACCOUNTS: ACCOUNTS.splice(index,1)
+    })
+  },
 
     render: function () {
 
@@ -68,9 +111,11 @@ var AccountList = React.createClass({
                 <AccountRow 
                     account = {each_account.name} 
                     key = {each_account.name}
-                    onChange = {this.props.onChange} 
+                    onChange = {this.props.onChange}
+                    onDelete = {this.deleteAccount}
                 />);
                       }, this);
+        rows.push(<NewAccountButton key = {'new_account'} onAddNewAccount = {this.addNewAccount}/>);
     return (
         <ul>
         {rows}
@@ -118,7 +163,7 @@ var TransactionsTable = React.createClass({
         return (
             <div className = 'row'>
             <h2>Recent Transactions for {this.props.activeAccount}</h2>
-            <table className = 'u-full-width'>
+            <table className = 'rwd-table'>
             <thead>
                 <tr>
                     <th>date</th>
@@ -143,6 +188,7 @@ var TransactionsTable = React.createClass({
 });        
         
 var TransactionList = React.createClass ({
+  
     passOnDelete: function(transaction) {
         this.props.onTransactionDelete(transaction);
     },
@@ -160,7 +206,7 @@ var TransactionList = React.createClass ({
                 DOES NOT WORK, I do not know why this is the case
                 
                 it is due to javascript scoping of the 'this' variable
-                */
+                */  
 
                 rows.push(
                     <TransactionRow 
@@ -171,6 +217,7 @@ var TransactionList = React.createClass ({
                 );  
         }
         }, this);
+        
         return (
             <tbody>
             {rows}
@@ -190,12 +237,12 @@ var TransactionRow = React.createClass({
 
         return (
             <tr>
-            <td>{trans.date}</td>
-            <td>{trans.name}</td>
-            <td>{trans.amount}</td>
-            <td>{trans.account}</td>
-            <td>{trans.category}</td>
-            <td><i onClick = {this.DeleteTransaction} className = 'fa fa-trash-o'></i></td>
+            <td data-th = 'Date'>{trans.date}</td>
+            <td data-th = 'Name'>{trans.name}</td>
+            <td data-th = 'Amount'>{trans.amount}</td>
+            <td data-th = 'Account'>{trans.account}</td>
+            <td data-th = 'Category'>{trans.category}</td>
+            <td data-th = 'Delete'><i onClick = {this.DeleteTransaction} className = 'fa fa-trash-o'></i></td>
             </tr>
         )
     }
@@ -249,3 +296,4 @@ var TransactionForm = React.createClass({
 
 
 React.render(React.createElement(Container, null), document.getElementById('mount-point'));
+}());
