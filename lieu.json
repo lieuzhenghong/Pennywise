@@ -1,0 +1,37 @@
+{
+  "transactions": [
+    {
+      "date": "2017-01-03T13:55:02.347Z",
+      "account": "Cash on hand",
+      "category": "Test",
+      "amount": 5,
+      "description": "Just a test transaction"
+    },
+    {
+      "date": "2017-01-03T13:55:04.106Z",
+      "account": "Cash on hand",
+      "category": "Test",
+      "amount": 5,
+      "description": "Just a test transaction"
+    },
+    {
+      "date": "2017-01-03T13:55:07.023Z",
+      "account": "Cash on hand",
+      "category": "Test",
+      "amount": 5,
+      "description": "Just a test transaction"
+    },
+    {
+      "date": "2017-01-03T13:55:38.147Z",
+      "account": "Cash on hand",
+      "category": "Test",
+      "amount": 5,
+      "description": "Just a test transaction"
+    }
+  ],
+  "accounts": [
+    "Cash on hand"
+  ],
+  "categories": [],
+  "subcategories": []
+}
