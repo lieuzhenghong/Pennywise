@@ -1,3 +1,4 @@
+'use strict';
 /*
 Transaction schema:
     date (unix epoch)
@@ -33,8 +34,10 @@ function getTransactions(filter) {
     );
 }
 
-function __addNewTransaction(transaction) {
-    // Private function: not meant to be used
+function __addNewTransaction(transaction) { // Private function
+    addNewEntry('accounts', transaction.account);
+    addNewEntry('categories', transaction.category);
+    addNewEntry('subcategories', transaction.subcategory);
     return (
         db.get('transactions')
         .push(transaction)
@@ -79,3 +82,109 @@ function addNewEntry(entry_type, entry_name) {
 function resetDatabase(){
     fs.unlink(database_fp);
 }
+/*
+================================
+================================
+================================
+*/ 
+
+/*
+function importData(file) {
+    // Take that file and do something to it
+    data = ...;
+    addNewTransaction(data);   
+}
+*/
+
+function dateFilter(transaction, date, operator) {
+    // operator can be !=, >=, >, etc
+    if (operator != "!=" && 
+        operator != "===" &&
+        operator != "==" &&
+        operator != "<=" &&
+        operator != "<" &&
+        operator != ">=" &&
+        operator != ">" ) {
+            return ("invalid operator");
+        }
+    return (
+        eval("Date.parse(transaction.date)" + operator + "date")
+    );
+}
+
+function propertyFilter(transaction, property, property_to_filter) {
+    return (
+        transaction[property] === property_to_filter
+    )
+}
+
+function sum(transactions) {
+    return (transactions.reduce((sum, trans) => sum + trans.amount , 0));
+}
+
+function query(filter_array, fn) {
+    // filter_array = [ [dateFilter, [args]], "&&", "!", [filter2, [args]]... ]
+
+    // Concatenating all the filters together
+    let filter = function(o) {
+        var final_value = "";
+        filter_array.forEach( (filter) => {
+            if (filter !== "&&" && filter !== "||" && filter !== "!" ) {
+                // ES6 spread syntax; too clever for me
+                // Calls the function ([0]) with the arguments ([1])
+                final_value += filter[0](o, ...filter[1])
+            }
+            else 
+            {
+                final_value += filter
+            }
+        });
+        console.log(final_value);
+        console.log(eval(final_value));
+        return (eval(final_value));
+    };
+
+// Handling optional parameter (the callback function)
+    if (fn !== undefined) {
+        return (
+            fn(getTransactions(filter))
+        );
+    }
+    else {
+        return getTransactions(filter);
+    }
+}
+
+
+/*
+==============================
+==============================
+==============================
+Testing
+*/
+
+var testTransaction = {
+  date: new Date(),
+  account: 'Cash on hand',
+  category: 'Test',
+  amount: 5,
+  description: 'Just a test transaction'
+};
+
+var testAccount = "Cash on hand";
+
+var testFilter = [ 
+    [propertyFilter, ['account', "Cash on hand"]], 
+    "||", 
+    [propertyFilter, ['category', 'test']],
+    "||",
+    [dateFilter, [Date.now(), ">"]]
+];
+
+//addNewTransaction(testTransaction);
+//addNewEntry('accounts', testAccount);
+//console.log(getTransactions(testFilter));
+//console.log(getEntry('accounts', testAccount));
+console.log(query(testFilter, sum));
+console.log(query(testFilter));
+//resetDatabase();

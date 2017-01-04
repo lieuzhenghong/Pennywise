@@ -1,0 +1,12 @@
+language specification
+
+each query has only 6 things to worry about;
+
+!
+()
+&&
+||
+; (EOQ) 
+filter(args...) => which will return Bool
+
+

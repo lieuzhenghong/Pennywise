@@ -1,0 +1,50 @@
+[
+{   
+    "date" : "2016-12-31T16:00:00.000Z",
+    "account" : "FRANK savings",
+    "category" : "Tech subscriptions",
+    "subcategory" : "recurring",
+    "amount" : 2.99,
+    "description" : "Google Drive"
+},
+{
+    "date" : "2016-12-31T16:00:00.000Z",
+    "account" : "FRANK savings",
+    "category" : "Business expenses",
+    "subcategory" : "recurring",
+    "amount" : 5,
+    "description" : "GSuite for The Co{de}llective"
+  },
+{
+    "date" : "2016-12-31T16:00:00.000Z",
+    "account" : "FRANK savings",
+    "category" : "Business expenses",
+    "subcategory" : "recurring",
+    "amount" : 0,
+    "description" : "lieuzhenghong.com domain"
+  },
+{
+    "date" : "2016-12-31T16:00:00.000Z",
+    "account" : "FRANK savings",
+    "category" : "Business expenses",
+    "subcategory" : "recurring",
+    "amount" : 0,
+    "description" : "theco{de}llective.com domain"
+  },
+{
+    "date" : "2017-01-01T16:00:00.000Z",
+    "account" : "Cash on hand",
+    "category" : "Personal grooming",
+    "subcategory" : "",
+    "amount" : 12,
+    "description" : "Haircut"
+  },
+{
+    "date" : "2017-01-02T16:00:00.000Z",
+    "account" : "FRANK savings",
+    "category" : "Computer games",
+    "subcategory" : "",
+    "amount" : 45,
+    "description" : "Overwatch"
+  }
+]
