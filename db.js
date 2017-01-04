@@ -107,8 +107,10 @@ function dateFilter(transaction, date, operator) {
         operator != ">" ) {
             return ("invalid operator");
         }
+        //console.log(Date.parse(date));
+        //console.log(Date.parse(transaction.date));
     return (
-        eval("Date.parse(transaction.date)" + operator + "date")
+        eval("Date.parse(transaction.date)" + operator + "Date.parse(date)")
     );
 }
 
@@ -139,8 +141,8 @@ function query(filter_array, fn) {
                 final_value += filter
             }
         });
-        console.log(final_value);
-        console.log(eval(final_value));
+        //console.log(final_value);
+        //console.log(eval(final_value));
         return (eval(final_value));
     };
 
@@ -178,7 +180,7 @@ var testFilter = [
     "||", 
     [propertyFilter, ['category', 'test']],
     "||",
-    [dateFilter, [Date.now(), ">"]]
+    [dateFilter, ["1 January 2017", "<"]]
 ];
 
 //addNewTransaction(testTransaction);
