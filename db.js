@@ -35,7 +35,6 @@ function getTransactions(filter) {
 }
 
 function __addNewTransaction(transaction) { // Private function
-    addNewEntry('accounts', transaction.account);
     addNewEntry('categories', transaction.category);
     addNewEntry('subcategories', transaction.subcategory);
     return (
@@ -53,6 +52,33 @@ function addNewTransaction(transactions) {
     }
     else {
         __addNewTransaction(transactions);
+    }
+}
+
+function getAccounts(filter) {
+    return(
+        db.get('accounts')
+        .filter(filter)
+        .value()
+    );
+}
+
+function getAccount(filter) {
+    return(
+        db.get('accounts')
+        .filter(filter)
+        .value()[0]
+    );
+}
+
+function addNewAccount(account_name) {
+    // if account name doesn't already exist
+    if (!getAccounts((o)=>account === o.name)) {
+        return (
+            db.get('accounts')
+            .push(transaction)
+            .value()
+        );
     }
 }
 
@@ -141,10 +167,9 @@ function query(filter_array, fn) {
                 final_value += filter
             }
         });
-        //console.log(final_value);
-        //console.log(eval(final_value));
         return (eval(final_value));
     };
+
 
 // Handling optional parameter (the callback function)
     if (fn !== undefined) {
@@ -165,6 +190,8 @@ function query(filter_array, fn) {
 Testing
 */
 
+// Going to try to mothball query and not use it if i can help it
+
 var testTransaction = {
   date: new Date(),
   account: 'Cash on hand',
@@ -183,10 +210,25 @@ var testFilter = [
     [dateFilter, ["1 January 2017", "<"]]
 ];
 
+var categoryFilter = [
+    [propertyFilter, ['account', 'Cash on hand']]
+];
+
+function findCurrentBalance(account) {
+    const acc = getAccount((o)=>o.name === account);
+    console.log(acc.name);
+    const trans = getTransactions((o)=>o.account === acc.name);
+    console.log(trans);
+    return acc.amount - sum(trans);
+}
+
+
 //addNewTransaction(testTransaction);
 //addNewEntry('accounts', testAccount);
 //console.log(getTransactions(testFilter));
 //console.log(getEntry('accounts', testAccount));
-console.log(query(testFilter, sum));
-console.log(query(testFilter));
+//console.log(query(testFilter, sum));
+//console.log(query(testFilter));
+//console.log(query(categoryFilter, sum));
+console.log(findCurrentBalance("FRANK savings"));
 //resetDatabase();

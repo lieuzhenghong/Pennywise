@@ -1,36 +1,163 @@
 {
   "transactions": [
-    {
-      "date": "2017-01-03T13:55:02.347Z",
-      "account": "Cash on hand",
-      "category": "Test",
-      "amount": 5,
-      "description": "Just a test transaction"
-    },
-    {
-      "date": "2017-01-03T13:55:04.106Z",
-      "account": "Cash on hand",
-      "category": "Test",
-      "amount": 5,
-      "description": "Just a test transaction"
-    },
-    {
-      "date": "2017-01-03T13:55:07.023Z",
-      "account": "Cash on hand",
-      "category": "Test",
-      "amount": 5,
-      "description": "Just a test transaction"
-    },
-    {
-      "date": "2017-01-03T13:55:38.147Z",
-      "account": "Cash on hand",
-      "category": "Test",
-      "amount": 5,
-      "description": "Just a test transaction"
-    }
+{
+    "date" : "2016-12-31T16:00:00.000Z",
+    "account" : "FRANK savings",
+    "category" : "Tech subscriptions",
+    "subcategory" : "recurring",
+    "amount" : 2.99,
+    "description" : "Google Drive"
+  },
+{
+    "date" : "2016-12-31T16:00:00.000Z",
+    "account" : "FRANK savings",
+    "category" : "Business expenses",
+    "subcategory" : "recurring",
+    "amount" : 5,
+    "description" : "GSuite for The Codellective"
+  },
+{
+    "date" : "2016-12-31T16:00:00.000Z",
+    "account" : "FRANK savings",
+    "category" : "Business expenses",
+    "subcategory" : "recurring",
+    "amount" : 0,
+    "description" : "lieuzhenghong.com domain"
+  },
+{
+    "date" : "2016-12-31T16:00:00.000Z",
+    "account" : "FRANK savings",
+    "category" : "Business expenses",
+    "subcategory" : "recurring",
+    "amount" : 0,
+    "description" : "thecodellective.com domain"
+  },
+{
+    "date" : "2017-01-01T16:00:00.000Z",
+    "account" : "Cash on hand",
+    "category" : "Personal grooming",
+    "subcategory" : "",
+    "amount" : 12,
+    "description" : "Haircut"
+  },
+{
+    "date" : "2017-01-02T16:00:00.000Z",
+    "account" : "FRANK savings",
+    "category" : "Unnecessary",
+    "subcategory" : "Computer games",
+    "amount" : 45,
+    "description" : "Overwatch"
+  },
+{
+    "date" : "2017-01-11T16:00:00.000Z",
+    "account" : "Cash on hand",
+    "category" : "Unnecessary",
+    "subcategory" : "Alcohol",
+    "amount" : 145,
+    "description" : "Duty-free alcohol at airport"
+  },
+{
+    "date" : "2017-01-12T16:00:00.000Z",
+    "account" : "Cash on hand",
+    "category" : "Unnecessary",
+    "subcategory" : "Alcohol",
+    "amount" : -23,
+    "description" : "Yugene returned me money"
+  },
+{
+    "date" : "2017-01-12T16:00:00.000Z",
+    "account" : "Cash on hand",
+    "category" : "Gym",
+    "subcategory" : "",
+    "amount" : 10.7,
+    "description" : "EnergyOne gym"
+  },
+{
+    "date" : "2017-01-12T16:00:00.000Z",
+    "account" : "Cash on hand",
+    "category" : "Food",
+    "subcategory" : "",
+    "amount" : 8.8,
+    "description" : "Supper with classmates"
+  },
+{
+    "date" : "2017-01-14T16:00:00.000Z",
+    "account" : "FRANK savings",
+    "category" : "Travel",
+    "subcategory" : "",
+    "amount" : 1018,
+    "description" : "Trip to Krabi--paid Qing Zhou"
+  },
+{
+    "date" : "2017-01-14T16:00:00.000Z",
+    "account" : "Stashed",
+    "category" : "",
+    "subcategory" : "",
+    "amount" : 50,
+    "description" : ""
+  },
+{
+    "date" : "2017-01-14T16:00:00.000Z",
+    "account" : "Cash on hand",
+    "category" : "",
+    "subcategory" : "",
+    "amount" : -50,
+    "description" : ""
+  },
+{
+    "date" : "2017-01-14T16:00:00.000Z",
+    "account" : "Cash on hand",
+    "category" : "Food",
+    "subcategory" : "",
+    "amount" : 5,
+    "description" : "Fish soup with Justin"
+  },
+{
+    "date" : "2017-01-14T16:00:00.000Z",
+    "account" : "Cash on hand",
+    "category" : "Food",
+    "subcategory" : "",
+    "amount" : 6,
+    "description" : "I treated Justin to gyozas"
+  },
+{
+    "date" : "2017-01-15T16:00:00.000Z",
+    "account" : "Cash on hand",
+    "category" : "Unnecessary",
+    "subcategory" : "Clubbing",
+    "amount" : 26,
+    "description" : "Paid naux for Fclub"
+  },
+{
+    "date" : "2017-01-16T16:00:00.000Z",
+    "account" : "Cash on hand",
+    "category" : "Gym",
+    "subcategory" : "",
+    "amount" : 5.35,
+    "description" : "EnergyOne gym w Justin and Yugene"
+  },
+{
+    "date" : "2017-01-16T16:00:00.000Z",
+    "account" : "Cash on hand",
+    "category" : "Food",
+    "subcategory" : "",
+    "amount" : 7.1,
+    "description" : "Lunch with Justin and Yugene"
+  }
   ],
   "accounts": [
-    "Cash on hand"
+{
+      "name": "Cash on hand",
+      "amount": 155
+    },
+{
+      "name": "Stashed",
+      "amount": 1700
+    },
+{
+      "name": "FRANK savings",
+      "amount": 7739.74
+    }
   ],
   "categories": [],
   "subcategories": []
